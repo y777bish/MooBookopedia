@@ -1,4 +1,4 @@
-﻿namespace MooBookopedia.Data
+﻿namespace MooBookopedia.Data.Enums
 {
     public enum MovieCategory
     {
