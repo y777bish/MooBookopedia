@@ -18,7 +18,7 @@ namespace MooBookopedia.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Authors()
         {
             return View();
         }
