@@ -15,5 +15,9 @@ namespace MooBookopedia.Controllers
         {
             return View(new RegisterVM());
         }
+        public IActionResult Login()
+        {
+            return View(new LoginVM());
+        }
     }
 }
