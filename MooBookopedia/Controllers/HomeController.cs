@@ -23,6 +23,15 @@ namespace MooBookopedia.Controllers
             return View();
         }
 
+        public IActionResult AddMovie()
+        {
+            return View();
+        }
+        public IActionResult ViewMovie()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
