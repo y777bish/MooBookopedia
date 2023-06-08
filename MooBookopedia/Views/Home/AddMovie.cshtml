@@ -1,0 +1,60 @@
+﻿@using MooBookopedia.Data.ViewModels;
+@model AddMovieVM;
+
+@{
+    ViewData["Title"] = "Add Movie";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Add Movie</h4>
+        </p>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Sorry!</b> - @TempData["Error"] </span>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="AddMovie">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Director" class="control-label"></label>
+                        <input asp-for="Director" class="form-control" />
+                        <span asp-validation-for="Director" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Actors" class="control-label"></label>
+                        <textarea asp-for="Actors" class="form-control"> </textarea>
+                        <span asp-validation-for="Actors" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Year" class="control-label"></label>
+                        <input asp-for="Year" placeholder="2023" class="form-control" />
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Desctiption" class="control-label"></label>
+                        <textarea class="form-control" asp-for="Desctiption"></textarea>
+                        <span asp-validation-for="Desctiption" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3 mb-5">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Add Movie" />
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
