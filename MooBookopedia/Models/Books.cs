@@ -8,8 +8,14 @@ namespace MooBookopedia.Models
     {
         [Key]
         public int BooksID { get; set; }
+
+        [Display(Name = "Name")]
         public string BookName { get; set; }
+
+        [Display(Name = "Description")]
         public string BookDescription { get; set; }
+
+        [Display(Name = "Picture URL")]
         public string BookPictureURL { get; set; }
         public string BookReview { get; set; }
         public string BookNotes { get; set; }
