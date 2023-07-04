@@ -31,6 +31,10 @@ namespace MooBookopedia.Controllers
         {
             return View();
         }
+        public IActionResult MoviesList()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
