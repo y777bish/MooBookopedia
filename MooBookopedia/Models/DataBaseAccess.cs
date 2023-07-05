@@ -550,6 +550,7 @@ namespace MooBookopedia.Models
                 command.CommandText = @"
                     SELECT Title, Description, ImageLink, OPID
                     FROM post
+                    WHERE BorM = 'M'
                 ";
 
                 SQLiteDataReader datareader = command.ExecuteReader();
@@ -589,8 +590,8 @@ namespace MooBookopedia.Models
                 command.CommandText = @"
                     SELECT Title, Description, ImageLink, OPID
                     FROM post
+                    WHERE BorM = 'B'
                 ";
-                // Adjust it to books properties
 
                 SQLiteDataReader datareader = command.ExecuteReader();
 
@@ -598,9 +599,9 @@ namespace MooBookopedia.Models
                 {
                     Books book = new Books
                     {
-                        /*MovieName = datareader.GetString(0),
-                        MovieDescription = datareader.GetString(1),
-                        MoviePictureURL = datareader.GetString(2)*/
+                        BookName = datareader.GetString(0),
+                        BookDescription = datareader.GetString(1),
+                        BookPictureURL = datareader.GetString(2)
                     };
 
                     books.Add(book);
