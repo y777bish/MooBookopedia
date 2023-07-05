@@ -559,8 +559,8 @@ namespace MooBookopedia.Models
                     Movies film = new Movies
                     {
                         MovieName = datareader.GetString(0),
-                        MoviePictureURL = datareader.GetString(1),
-                        MovieDescription = datareader.GetString(2),
+                        MovieDescription = datareader.GetString(1),
+                        MoviePictureURL = datareader.GetString(2)
                         /*MovieCategory = datareader.GetString(3)*/
                     };
 

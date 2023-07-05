@@ -17,7 +17,7 @@ namespace MooBookopedia.Controllers
         {
             //List<Movies> data = _context.GetAllFilms();
             List<Movies> data = DataBaseAccess.GetAllFilms();
-            return View();
+            return View(data);
         }
     }
 }
