@@ -2,6 +2,7 @@
 using MooBookopedia.Data.ViewModels;
 using System;
 using System.ComponentModel.Design;
+using System.Data.SQLite;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
@@ -199,7 +200,7 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
         }
-
+        
         public void GetFavouritesForUser(int userID) //pobiera polubienia dla danego uzytkownika
         {
             try
