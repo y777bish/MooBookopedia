@@ -25,29 +25,51 @@ namespace MooBookopedia.Models
             return null;
         }
         static string datasource = "Datasource=" + FindSolutionFilePath(Directory.GetCurrentDirectory()) + ";Version=3";
-        SQLiteConnection conn = new SQLiteConnection(datasource);
+        static SQLiteConnection conn = new SQLiteConnection(datasource);
 
-        public void CreateAccount(string login, string email, string password) //dodaje konto do bazy danych
+        
+        
+        public static bool CreateAccount(string login, string email, string password) //dodaje konto do bazy danych
+        //returns false when name or email is taken
         {
             try
             {
                 conn.Open();
+                SQLiteDataReader datareader;
                 var command = conn.CreateCommand();
                 command.CommandText =
+                @"
+                SELECT * FROM account 
+                WHERE Login = $login
+                OR Email = $email
+                ";
+                command.Parameters.AddWithValue("$login", login);
+                command.Parameters.AddWithValue("$email", email);
+                datareader = command.ExecuteReader();
+                if (datareader.HasRows) {
+                    datareader.Close();
+                    conn.Close();
+                    return false;
+                }
+                var command2 = conn.CreateCommand();
+                command2.CommandText =
                 @"
                 INSERT INTO account (Login, Email, Password)
                 VALUES($Login, $Email, $Password)
                 ";
-                command.Parameters.AddWithValue("$Login", login);
-                command.Parameters.AddWithValue("$Email", email);
-                command.Parameters.AddWithValue("$Password", password);
-                command.ExecuteNonQuery();
+                command2.Parameters.AddWithValue("$Login", login);
+                command2.Parameters.AddWithValue("$Email", email);
+                command2.Parameters.AddWithValue("$Password", password);
+                command2.ExecuteNonQuery();
                 conn.Close();
+                return true;
             }
             catch (SQLiteException ex)
             {
+
                 Console.WriteLine(ex.Message);
             }
+            return false;
         }
 
         public void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/) //dodaje post do bazy danych
