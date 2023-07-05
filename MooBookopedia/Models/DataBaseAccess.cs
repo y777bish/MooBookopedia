@@ -574,7 +574,46 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
 
-            return films;
+            return films;  
+        }
+
+        public static List<Books> GetAllBooks()
+        {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
+            List<Books> books = new List<Books>();
+
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                    SELECT Title, Description, ImageLink, OPID
+                    FROM post
+                ";
+                // Adjust it to books properties
+
+                SQLiteDataReader datareader = command.ExecuteReader();
+
+                while (datareader.Read())
+                {
+                    Books book = new Books
+                    {
+                        /*MovieName = datareader.GetString(0),
+                        MovieDescription = datareader.GetString(1),
+                        MoviePictureURL = datareader.GetString(2)*/
+                    };
+
+                    books.Add(book);
+                }
+
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return books;
         }
     }
 }
