@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MooBookopedia.Data;
+using MooBookopedia.Models;
 
 namespace MooBookopedia.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly DataBaseAccess _context;
 
-        public BooksController(AppDbContext context)
+        public BooksController(DataBaseAccess context)
         {
             _context = context;
         }
