@@ -27,7 +27,7 @@ namespace MooBookopedia.Models
         static string datasource = "Datasource=" + FindSolutionFilePath(Directory.GetCurrentDirectory()) + ";Version=3";
         static SQLiteConnection conn = new SQLiteConnection(datasource);
 
-        
+        static string pcName = System.Environment.MachineName + ":" + System.Environment.UserName;
         
         public static bool CreateAccount(string login, string email, string password) //dodaje konto do bazy danych
         //returns false when name or email is taken
@@ -71,6 +71,87 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
             return false;
+        }
+
+        public static void AddSession(int id)
+        {
+            try
+            {
+                conn.Open();
+                var comm = conn.CreateCommand();
+                comm.CommandText = @"
+                    DELETE FROM sessions
+                    ";
+                comm.ExecuteNonQuery();
+
+
+                var command = conn.CreateCommand();
+                command.CommandText =
+                @"
+                    INSERT INTO sessions (name, id)
+                    VALUES($name, $id)
+                    ";
+                command.Parameters.AddWithValue("$name", pcName);
+                command.Parameters.AddWithValue("$id", id);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public static int GetSession()
+        {
+            try
+            {
+                conn.Open();
+                SQLiteDataReader datareader;
+                var command = conn.CreateCommand();
+                command.CommandText =
+                @"
+                SELECT id FROM sessions 
+                WHERE name = $name
+                ";
+                command.Parameters.AddWithValue("$name", pcName);
+                datareader = command.ExecuteReader();
+                if (!datareader.HasRows)
+                {
+                    datareader.Close();
+                    conn.Close();
+                    return -1;
+                }
+                datareader.Read();
+                int id = datareader.GetInt32(0);
+                datareader.Close();
+                conn.Close();
+                return id;
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return -2; //wypadałoby zmienic na cos innego 
+            }
+        }
+
+        public static void Logout()
+        {
+            try
+            {
+                conn.Open();
+                var comm = conn.CreateCommand();
+                comm.CommandText = @"
+                    DELETE FROM sessions
+                    ";
+                comm.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public static void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/) //dodaje post do bazy danych
@@ -148,9 +229,8 @@ namespace MooBookopedia.Models
             }
         }
 
-        public static string Login(string loginOrEmail) //zwraca hasło dla danego loginu lub maila, w celu uwierzytleniania 
+        public static int Login(string loginOrEmail, string password) //jeśli nie udało się zalogować, zwraca -1, w innym wypadku zwraca id użytkownika
         {
-            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -158,20 +238,29 @@ namespace MooBookopedia.Models
                 var command = conn.CreateCommand();
                 command.CommandText =
                 @"
-                SELECT Password FROM account 
-                WHERE Login = $loginOrEmail
-                OR Email = $loginOrEmail
+                SELECT id FROM account 
+                WHERE (Login = $loginOrEmail OR Email = $loginOrEmail)
+                AND Password = $password
                 ";
                 command.Parameters.AddWithValue("$loginOrEmail", loginOrEmail);
+                command.Parameters.AddWithValue("$password", password);
                 datareader = command.ExecuteReader();
-                string password = datareader.GetString(0);
+                if (!datareader.HasRows)
+                {
+                    datareader.Close();
+                    conn.Close();
+                    return -1;
+                }
+                datareader.Read();
+                int id = datareader.GetInt32(0);
+                datareader.Close();
                 conn.Close();
-                return password;
+                return id;
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
-                return "cos nie działa"; //wypadałoby zmienic na cos innego 
+                return -2; //wypadałoby zmienic na cos innego 
             }
         }
 
