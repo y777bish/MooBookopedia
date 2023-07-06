@@ -1,4 +1,9 @@
 ﻿<!DOCTYPE html>
+@using MooBookopedia.Models;
+@{
+    var id = DataBaseAccess.GetSession();
+}
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,9 +37,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewMovie">View Movie (tego tu nie będzie, przykład)</a>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Login">
-                        Login
-                    </a>
+                    @if (id == -1)//czyli jeśli użytkownik nie jest zalogowany
+                    {
+                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Login">Login</a>
+                    }
+                    else
+                    {
+                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Logout">Logout</a>
+                    }
                 </div>
             </div>
         </nav>
