@@ -32,6 +32,7 @@ namespace MooBookopedia.Models
         public static bool CreateAccount(string login, string email, string password) //dodaje konto do bazy danych
         //returns false when name or email is taken
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -72,8 +73,9 @@ namespace MooBookopedia.Models
             return false;
         }
 
-        public void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/) //dodaje post do bazy danych
+        public static void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/) //dodaje post do bazy danych
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -99,8 +101,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void AddToFavorites(int userID, int postID) //dodaje polubinie do bazy danych
+        public static void AddToFavorites(int userID, int postID) //dodaje polubinie do bazy danych
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -121,8 +124,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void AddComment(int userID, int postID, string content) //dodaje komentarz do bazy danych
+        public static void AddComment(int userID, int postID, string content) //dodaje komentarz do bazy danych
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -144,8 +148,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public string Login(string loginOrEmail) //zwraca hasło dla danego loginu lub maila, w celu uwierzytleniania 
+        public static string Login(string loginOrEmail) //zwraca hasło dla danego loginu lub maila, w celu uwierzytleniania 
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -170,8 +175,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void GetFullUserInfo(string loginOrEmail) //mozna zmienic na id jesli trzeba, razem ze zmianą query sql
+        public static void GetFullUserInfo(string loginOrEmail) //mozna zmienic na id jesli trzeba, razem ze zmianą query sql
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -197,8 +203,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void GetCommentsForPost(int postID) //pobiera komentarze dla danego posta
+        public static void GetCommentsForPost(int postID) //pobiera komentarze dla danego posta
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -222,8 +229,9 @@ namespace MooBookopedia.Models
             }
         }
         
-        public void GetFavouritesForUser(int userID) //pobiera polubienia dla danego uzytkownika
+        public static void GetFavouritesForUser(int userID) //pobiera polubienia dla danego uzytkownika
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -235,7 +243,7 @@ namespace MooBookopedia.Models
                 ";
                 command.Parameters.AddWithValue("$userID", userID);
                 datareader = command.ExecuteReader();
-                while(datareader.Read())
+                while (datareader.Read())
                 {
                     //pobieranie danych (postID)
                 }
@@ -248,8 +256,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void GetPost(int postID) //można zmienic na Title albo cokolwiek innego po czym chcecie ściągać posta, tylko trzeba zmodyfikować sqla
+        public static void GetPost(int postID) //można zmienic na Title albo cokolwiek innego po czym chcecie ściągać posta, tylko trzeba zmodyfikować sqla
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -274,8 +283,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void RemoveFromFavorites(int postID, int userID) //self explanatory
+        public static void RemoveFromFavorites(int postID, int userID) //self explanatory
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -295,8 +305,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void ADMINDeleteAccount(string email) //delete account w/o verification, can be changed to ID with query modification
+        public static void ADMINDeleteAccount(string email) //delete account w/o verification, can be changed to ID with query modification
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -315,8 +326,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void USERDeleteAccount(string email, string password) //delete account with verification
+        public static void USERDeleteAccount(string email, string password) //delete account with verification
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -335,8 +347,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void ADMINDeletePost(int postID) //delete any users' post
+        public static void ADMINDeletePost(int postID) //delete any users' post
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -354,8 +367,9 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
         }
-        public void USERDeletePost(int postID, int opid) //delete current users post, if current userid is passed as opid
+        public static void USERDeletePost(int postID, int opid) //delete current users post, if current userid is passed as opid
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -375,8 +389,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void ADMINDeleteComment(int commentID) //self explanatory
+        public static void ADMINDeleteComment(int commentID) //self explanatory
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -395,8 +410,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void USERDeleteComment(int commentID, int userID) //restricts comment deletion to own comments, if current user id passed as userID
+        public static void USERDeleteComment(int commentID, int userID) //restricts comment deletion to own comments, if current user id passed as userID
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -416,8 +432,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void ChangeAdminPrivelages(int userID) //Adds or removes user as admin, to be replaced if another way of discerning admins is introduced (mby an admin table?)
+        public static void ChangeAdminPrivelages(int userID) //Adds or removes user as admin, to be replaced if another way of discerning admins is introduced (mby an admin table?)
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -441,8 +458,9 @@ namespace MooBookopedia.Models
         }
 
 
-        public void ChangePassword(int loginOrEmail, string newPassword) //can be changed to ID, with sql query modification
+        public static void ChangePassword(int loginOrEmail, string newPassword) //can be changed to ID, with sql query modification
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -464,8 +482,9 @@ namespace MooBookopedia.Models
 
         }
 
-        public void ChangeLogin(int userID, string newLogin) //pass current user ID as userID
+        public static void ChangeLogin(int userID, string newLogin) //pass current user ID as userID
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -486,8 +505,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void EditComment(int commentID, int userID, string content) //pass current user id as userID, or pass comment's UserID if current user is flagged as admin
+        public static void EditComment(int commentID, int userID, string content) //pass current user id as userID, or pass comment's UserID if current user is flagged as admin
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -509,8 +529,9 @@ namespace MooBookopedia.Models
             }
         }
 
-        public void EditPost(int postID, string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid) //pass current user id as opid to verify user, or pass post OPID as opid if current user is flagged admin
+        public static void EditPost(int postID, string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid) //pass current user id as opid to verify user, or pass post OPID as opid if current user is flagged admin
         {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
@@ -537,6 +558,85 @@ namespace MooBookopedia.Models
             }
 
 
+        }
+
+        public static List<Movies> GetAllFilms()
+        {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
+            List<Movies> films = new List<Movies>();
+
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                    SELECT Title, Description, ImageLink, OPID
+                    FROM post
+                    WHERE BorM = 'M'
+                ";
+
+                SQLiteDataReader datareader = command.ExecuteReader();
+
+                while (datareader.Read())
+                {
+                    Movies film = new Movies
+                    {
+                        MovieName = datareader.GetString(0),
+                        MovieDescription = datareader.GetString(1),
+                        MoviePictureURL = datareader.GetString(2)
+                        /*MovieCategory = datareader.GetString(3)*/
+                    };
+
+                    films.Add(film);
+                }
+
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return films;  
+        }
+
+        public static List<Books> GetAllBooks()
+        {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
+            List<Books> books = new List<Books>();
+
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                    SELECT Title, Description, ImageLink, OPID
+                    FROM post
+                    WHERE BorM = 'B'
+                ";
+
+                SQLiteDataReader datareader = command.ExecuteReader();
+
+                while (datareader.Read())
+                {
+                    Books book = new Books
+                    {
+                        BookName = datareader.GetString(0),
+                        BookDescription = datareader.GetString(1),
+                        BookPictureURL = datareader.GetString(2)
+                    };
+
+                    books.Add(book);
+                }
+
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return books;
         }
     }
 }

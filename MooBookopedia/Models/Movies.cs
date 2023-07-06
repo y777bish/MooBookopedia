@@ -9,14 +9,15 @@ namespace MooBookopedia.Models
         [Key]
         public int MoviesID { get; set; }
 
+        [Display(Name = "Picture")]
+        public string MoviePictureURL { get; set; }
+
         [Display(Name = "Name")]
         public string MovieName { get; set; }
 
         [Display(Name = "Description")]
         public string MovieDescription { get; set; }
-
-        [Display(Name = "Picture URL")]
-        public string MoviePictureURL { get; set; }
+        
         public string MovieReview { get; set; }
         public string MovieNotes { get; set; }
         public MovieCategory MovieCategory { get; set; }

@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MooBookopedia.Data;
+using Microsoft.EntityFrameworkCore;
+using MooBookopedia.Models;
 
 namespace MooBookopedia.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly AppDbContext _context;
+        //private readonly DataBaseAccess _context;
 
-        public MoviesController(AppDbContext context)
+        public MoviesController()
         {
-            _context = context;
+            //_context = new DataBaseAccess();
         }
 
         public IActionResult Index()
         {
-            /*var data = _context.Movies.ToList()*/; // Do odkomentowania jak będzie działała baza a później AppDbContext
-            return View();
+            //List<Movies> data = _context.GetAllFilms();
+            List<Movies> data = DataBaseAccess.GetAllFilms();
+            return View(data);
         }
     }
 }
