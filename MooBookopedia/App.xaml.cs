@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using MooBookopedia.Data;
+using MooBookopedia.Models;
 
 namespace MooBookopedia
 {
@@ -14,7 +16,7 @@ namespace MooBookopedia
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>();
+            services.AddScoped<DataBaseAccess>();
         }
     }
 }

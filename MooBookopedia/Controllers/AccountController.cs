@@ -6,7 +6,6 @@ namespace MooBookopedia.Controllers
 {
     public class AccountController : Controller
     {
-        private AppDbContext _context;
 
         public AccountController()
         {

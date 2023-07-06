@@ -2,7 +2,7 @@
 @model IEnumerable<Movies>
 
 @{
-    ViewData["Title"] = "List of movies";
+    ViewData["Title"] = "List of Movies";
 }
 
 <div class="row">
@@ -29,7 +29,7 @@
                 {
                     <tr>
                         <td class="align-middle">
-                            <img class="rounded-circle" src="@item.MoviePictureURL" alt="@item.MovieName style="max-width: 150px"/>
+                            <img class="border border-dark" src="@item.MoviePictureURL" alt="@item.MovieName" style="max-width: 150px" />
                         </td>
                         <td class="align-middle">
                             @Html.DisplayFor(modelItem => item.MovieName)

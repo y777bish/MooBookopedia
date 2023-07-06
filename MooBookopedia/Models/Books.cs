@@ -15,7 +15,7 @@ namespace MooBookopedia.Models
         [Display(Name = "Description")]
         public string BookDescription { get; set; }
 
-        [Display(Name = "Picture URL")]
+        [Display(Name = "Picture")]
         public string BookPictureURL { get; set; }
         public string BookReview { get; set; }
         public string BookNotes { get; set; }

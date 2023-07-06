@@ -1,9 +1,8 @@
 ﻿@using MooBookopedia.Models;
-@*@model MooBookopedia.Views.Books.BooksListModel*@
 @model IEnumerable<Books>
 
 @{
-    ViewData["Title"] = "List of movies";
+    ViewData["Title"] = "List of Books";
 }
 
 <div class="row">
@@ -30,7 +29,7 @@
                 {
                     <tr>
                         <td class="align-middle">
-                            <img class="rounded-circle" src="@item.BookPictureURL" alt="@item.BookName style="max-width: 150px"/>
+                            <img class="border border-dark" src="@item.BookPictureURL" alt="@item.BookName" style="max-width: 150px" />
                         </td>
                         <td class="align-middle">
                             @Html.DisplayFor(modelItem => item.BookName)
