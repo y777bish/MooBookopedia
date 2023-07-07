@@ -153,6 +153,39 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
         }
+        public static bool IsLoggedUserAdmin()
+        {
+            try
+            {
+                conn.Open();
+                SQLiteDataReader datareader;
+                var command = conn.CreateCommand();
+                command.CommandText =
+                @"
+                SELECT Admin FROM account, sessions WHERE sessions.name = $name AND account.id = sessions.id
+                ";
+                command.Parameters.AddWithValue("$name", pcName);
+                datareader = command.ExecuteReader();
+                if (!datareader.HasRows)
+                {
+                    datareader.Close();
+                    conn.Close();
+                    return false;
+                }
+                datareader.Read();
+                int admin = datareader.GetInt32(0);
+                datareader.Close();
+                conn.Close();
+                if (admin == 0) return false;
+                
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false; //wypadałoby zmienic na cos innego 
+            }
+        }
 
         public static void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/, string borm) //dodaje post do bazy danych
         {
