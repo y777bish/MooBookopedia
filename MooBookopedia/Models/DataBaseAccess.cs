@@ -1,5 +1,6 @@
 ﻿using MooBookopedia.Data.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data.SQLite;
 using System.IO;
@@ -501,6 +502,26 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
         }
+        public static void ADMINApprovePost(int postID)
+        {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText =
+                @"
+                UPDATE Post SET Accepted = 1 WHERE ID = $postID 
+                ";
+                command.Parameters.AddWithValue("$postID", postID);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         public static void USERDeletePost(int postID, int opid) //delete current users post, if current userid is passed as opid
         {
             SQLiteConnection conn = new SQLiteConnection(datasource);
@@ -706,7 +727,7 @@ namespace MooBookopedia.Models
                 command.CommandText = @"
                     SELECT Title, Description, ImageLink, OPID
                     FROM post
-                    WHERE BorM = 'M'
+                    WHERE BorM = 'M' AND Accepted = 1
                 ";
 
                 SQLiteDataReader datareader = command.ExecuteReader();
@@ -734,6 +755,59 @@ namespace MooBookopedia.Models
             return films;  
         }
 
+        public static List<Movies> GetAllFilmsForAdmin()
+        {
+            SQLiteConnection conn = new SQLiteConnection(datasource);
+            List<Movies> films = new List<Movies>();
+
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                    SELECT *
+                    FROM post
+                    WHERE Accepted != 1
+                ";
+
+                SQLiteDataReader datareader = command.ExecuteReader();
+
+                while (datareader.Read())
+                {
+                    string Actors;
+                    try
+                    {
+                        Actors = datareader.GetString(3);
+                    }
+                    catch
+                    {
+                        Actors = "NULL";
+                    }
+                    Movies film = new Movies
+                    {
+                        MoviesID = datareader.GetInt32(0),
+                        MovieName = datareader.GetString(1),
+                        Director = datareader.GetString(2),
+                        Actors = Actors,
+                        Year = datareader.GetInt32(4),
+                        MovieDescription = datareader.GetString(5),
+                        MoviePictureURL = datareader.GetString(6),
+                        borm = datareader.GetString(8),
+                    };
+
+                    films.Add(film);
+                }
+
+                conn.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return films;
+        }
+
         public static List<Books> GetAllBooks()
         {
             SQLiteConnection conn = new SQLiteConnection(datasource);
@@ -746,7 +820,7 @@ namespace MooBookopedia.Models
                 command.CommandText = @"
                     SELECT Title, Description, ImageLink, OPID
                     FROM post
-                    WHERE BorM = 'B'
+                    WHERE BorM = 'B' AND Accepted = 1
                 ";
 
                 SQLiteDataReader datareader = command.ExecuteReader();

@@ -1,6 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using MooBookopedia.Models;
 @{
-    <h1>Widok admina</h1>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Picture
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Directior
+                        </th>
+                        <th>
+                            Year of production
+                        </th>
+                        <th>
+                            Actors
+                        </th>
+                        <th>
+                            Book or Movie
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in DataBaseAccess.GetAllFilmsForAdmin())
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <img class="border border-dark" src="@item.MoviePictureURL" alt="@item.MovieName" style="max-width: 150px" />
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.MovieName)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.MovieDescription)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Director)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Year)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Actors)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.borm)
+                            </td>
+                            <td class="align-middle ">
+                                <div class="d-flex flex-column">
+                                    <a class="btn btn-success" asp-area="" asp-controller="Admin" asp-action="Accept" asp-route-id="@item.MoviesID">Accept</a>
+                                    <a class="btn btn-danger" asp-area="" asp-controller="Admin" asp-action="Deny" asp-route-id="@item.MoviesID"><i class="bi bi-trash">Deny</i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
