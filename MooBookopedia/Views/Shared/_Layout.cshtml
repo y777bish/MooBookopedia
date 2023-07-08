@@ -36,6 +36,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewMovie">View Movie (tego tu nie będzie, przykład)</a>
                         </li>
+                        @if (DataBaseAccess.IsLoggedUserAdmin())//czy user jest adminem
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link alert-danger" asp-area="" asp-controller="Admin" asp-action="Index">Admin view</a>
+                            </li>
+                        }
+                        
                     </ul>
                     @if (id == -1)//czyli jeśli użytkownik nie jest zalogowany
                     {

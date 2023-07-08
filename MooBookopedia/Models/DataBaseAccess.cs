@@ -153,26 +153,71 @@ namespace MooBookopedia.Models
                 Console.WriteLine(ex.Message);
             }
         }
+        public static bool IsLoggedUserAdmin()
+        {
+            try
+            {
+                conn.Open();
+                SQLiteDataReader datareader;
+                var command = conn.CreateCommand();
+                command.CommandText =
+                @"
+                SELECT Admin FROM account, sessions WHERE sessions.name = $name AND account.id = sessions.id
+                ";
+                command.Parameters.AddWithValue("$name", pcName);
+                datareader = command.ExecuteReader();
+                if (!datareader.HasRows)
+                {
+                    datareader.Close();
+                    conn.Close();
+                    return false;
+                }
+                datareader.Read();
+                int admin = datareader.GetInt32(0);
+                datareader.Close();
+                conn.Close();
+                if (admin == 0) return false;
+                
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false; //wypadałoby zmienic na cos innego 
+            }
+        }
 
-        public static void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/) //dodaje post do bazy danych
+        public static void CreatePost(string title, string directors, string actors, int yoproduction, string description, string imagelink, int opid/*original poster id*/, string borm) //dodaje post do bazy danych
         {
             SQLiteConnection conn = new SQLiteConnection(datasource);
             try
             {
                 conn.Open();
                 var command = conn.CreateCommand();
-                command.CommandText =
-                @"
-                INSERT INTO post (Title, Directors, Actors, YOProduction, Description, ImageLink, OPID)
-                VALUES($Title, $Directors, $Actors, $YOProduction, $Description, $ImageLink, $opid)
-                ";
+                if(borm == "M")
+                {
+                    command.CommandText =
+                    @"
+                    INSERT INTO post (Title, Director, Actors, YOProduction, Description, ImageLink, OPID, BorM)
+                    VALUES($Title, $Directors, $Actors, $YOProduction, $Description, $ImageLink, $opid, $borm)
+                    ";
+                    command.Parameters.AddWithValue("$Actors", actors);
+                }
+                else
+                {
+                    command.CommandText =
+                    @"
+                    INSERT INTO post (Title, Director, YOProduction, Description, ImageLink, OPID, BorM)
+                    VALUES($Title, $Directors,$YOProduction, $Description, $ImageLink, $opid, $borm)
+                    ";
+                }
                 command.Parameters.AddWithValue("$Title", title);
                 command.Parameters.AddWithValue("$Directors", directors);
-                command.Parameters.AddWithValue("$Actors", actors);
                 command.Parameters.AddWithValue("$YOProduction", yoproduction);
                 command.Parameters.AddWithValue("$Description", description);
                 command.Parameters.AddWithValue("$ImageLink", imagelink);
                 command.Parameters.AddWithValue("$opid", opid);
+                command.Parameters.AddWithValue("borm", borm);
                 command.ExecuteNonQuery();
                 conn.Close();
             }

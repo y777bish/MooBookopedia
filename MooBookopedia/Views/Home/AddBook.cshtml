@@ -1,14 +1,14 @@
 ﻿@using MooBookopedia.Data.ViewModels;
-@model AddMovieVM;
+@model AddBookVM;
 
 @{
-    ViewData["Title"] = "Add Movie";
+    ViewData["Title"] = "Add Book";
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Add Movie</h4>
+            <h4>Add Book</h4>
         </p>
 
         @if (TempData["Error"] != null)
@@ -25,7 +25,7 @@
         }
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="AddMovie">
+                <form asp-action="AddBook">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group">
@@ -37,11 +37,6 @@
                         <label asp-for="Director" class="control-label"></label>
                         <input asp-for="Director" class="form-control" />
                         <span asp-validation-for="Director" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Actors" class="control-label"></label>
-                        <textarea asp-for="Actors" class="form-control"> </textarea>
-                        <span asp-validation-for="Actors" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Year" class="control-label"></label>
@@ -60,8 +55,8 @@
                     </div>
 
                     <div class="form-group mt-3 mb-5">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Add Movie" />
-                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="AddMovie">Cancel</a>
+                        <input class="btn btn-outline-success float-right" type="submit" value="Add Book" />
+                        <a class="btn btn-outline-secondary" asp-controller="Books" asp-action="AddBook">Cancel</a>
                     </div>
                 </form>
             </div>
