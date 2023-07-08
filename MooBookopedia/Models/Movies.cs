@@ -29,5 +29,11 @@ namespace MooBookopedia.Models
         public int ProducerId { get; set; }
         [ForeignKey("ProducerId")]
         public MovieProducer MovieProducer { get; set; }
+
+        public string Director { get; set; }
+        public string Actors { get; set; }
+        public int Year { get; set; }
+
+        public string borm { get; set; }
     }
 }
