@@ -2,7 +2,7 @@
 @model AddMovieVM;
 
 @{
-    ViewData["Title"] = "Add Movie";
+    ViewData["Title"] = "Dodaj film";
 }
 
 <div class="row">
@@ -14,13 +14,13 @@
         @if (TempData["Error"] != null)
         {
             <div class="col-md-12 alert alert-success">
-                <span><b>Sorry!</b> - @TempData["Error"] </span>
+                <span><b>Błąd!</b> - @TempData["Error"] </span>
             </div>
         }
         @if (TempData["Success"] != null)
         {
             <div class="col-md-12 alert alert-success">
-                <span><b>Success!</b> - @TempData["Success"] </span>
+                <span><b>Sukces!</b> - @TempData["Success"] </span>
             </div>
         }
         <div class="row">
@@ -60,8 +60,8 @@
                     </div>
 
                     <div class="form-group mt-3 mb-5">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Add Movie" />
-                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="AddMovie">Cancel</a>
+                        <input class="btn btn-outline-success float-right" type="submit" value="Dodaj" />
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="AddMovie">Anuluj</a>
                     </div>
                 </form>
             </div>

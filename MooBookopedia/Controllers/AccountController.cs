@@ -25,7 +25,7 @@ namespace MooBookopedia.Controllers
 
             if(!DataBaseAccess.CreateAccount(registerVM.FullName, registerVM.EmailAddress, registerVM.Password))
             {
-                TempData["Error"] = "This username or email is already in use";
+                TempData["Error"] = "Nazwa użytkownika lub email jest zajęty";
                 return View(registerVM);
             }
             return View("~/Views/Account/Login.cshtml");
@@ -46,7 +46,7 @@ namespace MooBookopedia.Controllers
 
             if (userId == -1)
             {
-                TempData["Error"] = "Wrong login or password";
+                TempData["Error"] = "Niepoprawne dane";
                 return View(loginVM);
             }
             DataBaseAccess.AddSession(userId);

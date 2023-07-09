@@ -2,7 +2,7 @@
 @model IEnumerable<Books>
 
 @{
-    ViewData["Title"] = "List of Books";
+    ViewData["Title"] = "Lista książek";
 }
 
 <div class="row">
@@ -11,23 +11,20 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.BookPictureURL)
+                        Zdjęcie
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.BookName)
+                        Nazwa książki
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.BookDescription)
-                    </th>
-                    <th>
-                        Actions
+                        Opis
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr onclick="window.location='#/Home';">
                         <td class="align-middle">
                             <img class="border border-dark" src="@item.BookPictureURL" alt="@item.BookName" style="max-width: 150px" />
                         </td>
@@ -38,10 +35,7 @@
                             @Html.DisplayFor(modelItem => item.BookDescription)
                         </td>
                         <td class="align-middle">
-                            <a class="btn btn-outline-primary"><i class="bi bi-clipboard">Add Note</i></a> |
-                            <a class="btn btn-outline-secondary"><i class="bi bi-pencil-square">Edit</i></a> |
-                            <a class="btn btn-outline-info"><i class="bi bi-eye">Details</i></a> |
-                            <a class="btn btn-danger"><i class="bi bi-trash">Delete</i></a>
+                            <a class="btn btn-outline-primary" asp-area="" asp-controller="Home" asp-action="ViewBook" asp-route-id="@item.BooksID">Zobacz więcej</a>
                         </td>
                     </tr>
                 }

@@ -5,25 +5,18 @@
     ViewData["Title"] = Model.MovieName;
 }
 
-<h1 >
+<h1>
     @Model.MovieName (@Model.Year)
 </h1>
 <hr />
 <div class="row">
     <div class="col-md-10">
         <h3>
-            Reżyser
+            Autor
         </h3>
         <hr />
         <p>
             @Model.Director
-        </p>
-        <h3>
-            Aktorzy
-        </h3>
-        <hr />
-        <p>
-            @Model.Actors
         </p>
     </div>
     <div class="col-md-2">
@@ -36,5 +29,5 @@
 </h3>
 <hr />
 <p>
-@Model.MovieDescription
+    @Model.MovieDescription
 </p>

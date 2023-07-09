@@ -725,7 +725,7 @@ namespace MooBookopedia.Models
                 conn.Open();
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    SELECT Title, Description, ImageLink, OPID
+                    SELECT Title, Description, ImageLink, ID
                     FROM post
                     WHERE BorM = 'M' AND Accepted = 1
                 ";
@@ -738,8 +738,8 @@ namespace MooBookopedia.Models
                     {
                         MovieName = datareader.GetString(0),
                         MovieDescription = datareader.GetString(1),
-                        MoviePictureURL = datareader.GetString(2)
-                        /*MovieCategory = datareader.GetString(3)*/
+                        MoviePictureURL = datareader.GetString(2),
+                        MoviesID = datareader.GetInt32(3)
                     };
 
                     films.Add(film);
@@ -757,7 +757,6 @@ namespace MooBookopedia.Models
 
         public static List<Movies> GetAllFilmsForAdmin()
         {
-            SQLiteConnection conn = new SQLiteConnection(datasource);
             List<Movies> films = new List<Movies>();
 
             try
@@ -808,6 +807,59 @@ namespace MooBookopedia.Models
             return films;
         }
 
+        public static Movies GetMovie(int id)
+        {
+            Movies film;
+
+            try
+            {
+                conn.Open();
+                var command = conn.CreateCommand();
+                command.CommandText = @"
+                    SELECT *
+                    FROM post
+                    WHERE ID = $id
+                ";
+                command.Parameters.AddWithValue("$id", id);
+                SQLiteDataReader datareader = command.ExecuteReader();
+                datareader.Read();
+                if (!datareader.HasRows)
+                {
+                    datareader.Close();
+                    conn.Close();
+                    return new Movies { borm = "none" };
+                }
+                    string Actors;
+                try
+                {
+                    Actors = datareader.GetString(3);
+                }
+                catch
+                {
+                    Actors = "NULL";
+                }
+                film = new Movies
+                {
+                    MoviesID = datareader.GetInt32(0),
+                    MovieName = datareader.GetString(1),
+                    Director = datareader.GetString(2),
+                    Actors = Actors,
+                    Year = datareader.GetInt32(4),
+                    MovieDescription = datareader.GetString(5),
+                    MoviePictureURL = datareader.GetString(6),
+                    borm = datareader.GetString(8),
+                };
+
+                conn.Close();
+                return film;
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return new Movies {borm = "none"};
+        }
+
         public static List<Books> GetAllBooks()
         {
             SQLiteConnection conn = new SQLiteConnection(datasource);
@@ -818,7 +870,7 @@ namespace MooBookopedia.Models
                 conn.Open();
                 var command = conn.CreateCommand();
                 command.CommandText = @"
-                    SELECT Title, Description, ImageLink, OPID
+                    SELECT Title, Description, ImageLink, ID
                     FROM post
                     WHERE BorM = 'B' AND Accepted = 1
                 ";
@@ -831,7 +883,8 @@ namespace MooBookopedia.Models
                     {
                         BookName = datareader.GetString(0),
                         BookDescription = datareader.GetString(1),
-                        BookPictureURL = datareader.GetString(2)
+                        BookPictureURL = datareader.GetString(2),
+                        BooksID = datareader.GetInt32(3)
                     };
 
                     books.Add(book);

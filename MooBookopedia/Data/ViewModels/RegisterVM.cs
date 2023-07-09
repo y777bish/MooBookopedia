@@ -5,22 +5,23 @@ namespace MooBookopedia.Data.ViewModels
 {
     public class RegisterVM
     {
-        [Display(Name = "Full name")]
-        [Required(ErrorMessage = "Full name is required")]
+        [Display(Name = "Nazwa")]
+        [Required(ErrorMessage = "Nazwa jest konieczna")]
         public string FullName { get; set; }
 
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "Email address is required")]
+        [Display(Name = "Adres email")]
+        [Required(ErrorMessage = "Email jest konieczny")]
         public string EmailAddress { get; set; }
 
         [Required]
+        [Display(Name = "Hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Confirm password")]
-        [Required(ErrorMessage = "Confirm password is required")]
+        [Display(Name = "Potwierdź hasło")]
+        [Required(ErrorMessage = "Trzeba potwierdzić hasło")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        [Compare("Password", ErrorMessage = "Hasła nie są takie same")]
         public string ConfirmPassword { get; set; }
     }
 }

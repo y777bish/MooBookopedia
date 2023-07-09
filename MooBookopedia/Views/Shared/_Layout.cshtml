@@ -25,32 +25,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Authors">Authors</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Authors">Autorzy</a>
+                        </li>
+
+                        @if (id != -1)
+                        {
+                        <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddMovie">Dodaj film</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddMovie">Add Movie (Widoczne po zalogowaniu)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddBook">Dodaj książkę</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewMovie">View Movie (tego tu nie będzie, przykład)</a>
-                        </li>
+                        }
                         @if (DataBaseAccess.IsLoggedUserAdmin())//czy user jest adminem
                         {
                             <li class="nav-item">
-                                <a class="nav-link alert-danger" asp-area="" asp-controller="Admin" asp-action="Index">Admin view</a>
+                                <a class="nav-link alert-danger" asp-area="" asp-controller="Admin" asp-action="Index">Widok admina</a>
                             </li>
                         }
                         
                     </ul>
                     @if (id == -1)//czyli jeśli użytkownik nie jest zalogowany
                     {
-                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Login">Login</a>
+                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Login">Zaloguj</a>
                     }
                     else
                     {
-                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Logout">Logout</a>
+                        <a a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Logout">Wyloguj</a>
                     }
                 </div>
             </div>
@@ -66,7 +70,7 @@
         <div class="container text-center">
 
             <p>
-                &copy; 2023 - MooBookopedia - <a asp-area="" asp-controller="Home" asp-action="Authors">Authors</a>
+                &copy; 2023 - MooBookopedia - <a asp-area="" asp-controller="Home" asp-action="Authors">Autorzy</a>
             </p>
         </div>
     </footer>

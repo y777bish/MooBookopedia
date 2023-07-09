@@ -5,28 +5,28 @@ namespace MooBookopedia.Data.ViewModels
 {
     public class AddMovieVM
     {
-        [Display(Name = "Movie name")]
-        [Required(ErrorMessage = "Movie name is required")]
+        [Display(Name = "Nazwa filmu")]
+        [Required(ErrorMessage = "Nazwa filmu jest konieczna")]
         public string Name { get; set; }
 
-        [Display(Name = "Director name")]
-        [Required(ErrorMessage = "Director name is required")]
+        [Display(Name = "Reżyser")]
+        [Required(ErrorMessage = "Reżyser jest konieczny")]
         public string Director { get; set; }
 
-        [Display(Name = "Actors (use commas)")]
-        [Required(ErrorMessage = "At least one actor is required")]
+        [Display(Name = "Aktorzy")]
+        [Required(ErrorMessage = "Przynajmniej jeden aktor jest wymagany")]
         public string Actors { get; set; }
 
-        [Display(Name = "Image link")]
-        [Required(ErrorMessage = "Image link is required")]
+        [Display(Name = "Link do zdjęcia")]
+        [Required(ErrorMessage = "Link do zdjęcia jest konieczny")]
         public string ImageLink { get; set; }
 
-        [Display(Name = "Year of production")]
-        [Required(ErrorMessage = "Year of production is required")]
+        [Display(Name = "Rok produkcji")]
+        [Required(ErrorMessage = "Rok produkcji jest konieczny")]
         public int Year { get; set; }
 
-        [Display(Name = "Desctiption")]
-        [Required(ErrorMessage = "Desctiption is required")]
+        [Display(Name = "Opis")]
+        [Required(ErrorMessage = "Opis jest konieczny")]
         public string Desctiption { get; set; }
     }
 }
