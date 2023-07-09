@@ -5,11 +5,12 @@ namespace MooBookopedia.Data.ViewModels
 {
     public class LoginVM
     {
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "Email address is required")]
+        [Display(Name = "Adres email")]
+        [Required(ErrorMessage = "Email jest konieczny")]
         public string EmailAddress { get; set; }
 
         [Required]
+        [Display(Name = "Hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

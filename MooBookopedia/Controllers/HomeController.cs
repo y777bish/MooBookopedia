@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using MooBookopedia.Data.ViewModels;
 using MooBookopedia.Models;
 using System.Diagnostics;
+using System.Security.Principal;
 
 namespace MooBookopedia.Controllers
 {
@@ -34,9 +36,9 @@ namespace MooBookopedia.Controllers
         {
             if (!ModelState.IsValid) return View(addMovieVM);
             int userId = DataBaseAccess.GetSession();
-            if (userId == -1) return View("~/Views/Account/Login.cshtml");
+            if (userId == -1) return View("");
             DataBaseAccess.CreatePost(addMovieVM.Name, addMovieVM.Director, addMovieVM.Actors, addMovieVM.Year, addMovieVM.Desctiption, addMovieVM.ImageLink, userId, "M");
-            TempData["Success"] = "Your movie waits to be accepted by a moderator.";
+            TempData["Success"] = "Twój film czeka na potwierdzenie przez administratora.";
             return View();
 
         }
@@ -52,13 +54,23 @@ namespace MooBookopedia.Controllers
             int userId = DataBaseAccess.GetSession();
             if (userId == -1) return View("~/Views/Account/Login.cshtml");
             DataBaseAccess.CreatePost(addBookVM.Name, addBookVM.Director, "", addBookVM.Year, addBookVM.Desctiption, addBookVM.ImageLink, userId, "B");
-            TempData["Success"] = "Your book waits to be accepted by a moderator.";
+            TempData["Success"] = "Twoja książka czeka na potwierdzenie przez administratora.";
             return View();
 
         }
-        public IActionResult ViewMovie()
+        public IActionResult ViewMovie(int id)
         {
-            return View();
+            if(id == 0) return View("~/Views/Home/Index.cshtml");
+            Movies film = DataBaseAccess.GetMovie(id);
+            if (film.borm == "M") return View (film);
+            return View("~/Views/Home/Index.cshtml");
+        }
+        public IActionResult ViewBook(int id)
+        {
+            if (id == 0) return View("~/Views/Home/Index.cshtml");
+            Movies book = DataBaseAccess.GetMovie(id);
+            if (book.borm == "B") return View(book);
+            return View("~/Views/Home/Index.cshtml");
         }
         public IActionResult MoviesList()
         {
